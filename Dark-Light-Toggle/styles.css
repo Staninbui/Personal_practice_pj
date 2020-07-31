@@ -1,0 +1,115 @@
+body {
+    /* 自定义属性,颜色基本都是用var自定义属性 */
+    --accent-color: orangered;
+    --background-color: white;
+    --text-color: black;
+    --button-text-color: var(--background-color);
+    --transition-delay: 1s;
+
+    /* flex布局,高度设置为100%视口高度 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+
+    /* 切换效果 */
+    transition: var(--transition-delay);
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.dark {
+    /* 这里就是设定变量的好处了,当过度时会通过class来替换原来的属性 */
+    --accent-color: #d0d066;
+    --background-color: #333;
+    --text-color: white;
+}
+
+/* 设定标题 */
+.title {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* 主题切换按钮 */
+.theme-toggle-button {
+    background-color: var(--accent-color);
+    color: var(--button-text-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+    border: none;
+    outline: none;
+    transition: var(--transition-delay);
+    transform: scale(1);
+}
+
+/* 切换图标 */
+.theme-toggle-button .icon {
+    margin-right: 0.5em;
+}
+
+/* 切换按钮悬停与聚焦时放大 */
+.theme-toggle-button:hover,
+.theme-toggle-button:focus {
+    transform: scale(1.1);
+}
+
+/* 主图标容器 */
+.sun-moon-container {
+    --rotation: 0;
+
+    position: absolute;
+    /* 指定元素不会成为鼠标事件的target */
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    /* 高度使用了200vmin,会自动变成视口尺寸下,宽高较小的一方单位的200%,用来固定位置*/
+    height: 200vmin;
+    /* 旋转变形,使用了calc 动态旋转 */
+    transform: rotate(calc(var(--rotation) * 1deg));
+    transition: transform var(--transition-delay);
+}
+
+/* 设定主图标显示模式 */
+.sun,
+.moon {
+    position: absolute;
+    transition: opacity, fill, var(--transition-delay);
+    width: 30px;
+    height: 30px;
+    /* fill属性,用于动画结束时,保持动画给予的值 */
+    fill: var(--accent-color);
+}
+
+/* 设定白天图标 */
+.sun {
+    top: 5%;
+    opacity: 1;
+}
+
+/* 设定夜间模式白天图标 */
+.dark .sun {
+    opacity: 0;
+}
+
+/* 设定晚上图标 */
+.moon {
+    bottom: 5%;
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+/* 设定夜间模式晚上图标 */
+.dark .moon {
+    opacity: 1;
+}
