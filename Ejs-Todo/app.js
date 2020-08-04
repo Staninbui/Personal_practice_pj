@@ -1,5 +1,5 @@
 //入口文件
-
+const getDate = require('./date.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -19,14 +19,7 @@ app.use(express.static("public"));
 //get路由
 app.get('/', (req, res) => {
 
-    //日期格式化
-    var options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-    };
-
-    var day = new Date().toLocaleDateString("en-US", options);
+    let day = getDate();
 
     res.render("list", { day: day, items: items });
 });
